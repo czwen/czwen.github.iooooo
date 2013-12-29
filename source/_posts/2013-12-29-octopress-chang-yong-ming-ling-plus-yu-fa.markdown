@@ -12,10 +12,11 @@ categories: Octopress
 {%codeblock %}
 rake new_post["Octopress 常用命令+语法"]
 {%endcodeblock%}
-创建后可在`source/_posts/`找到刚刚生成的markdown文件，<br>
-文件名字为`2013-12-29-octopress-chang-yong-ming-ling-plus-yu-fa.markdown`。<br>
-用text editor打开后可即可编辑。
+创建后可在`source/_posts/`找到刚刚生成的markdown文件<br>
+文件名字为`2013-12-29-octopress-chang-yong-ming-ling-plus-yu-fa.markdown`<br>
+用text editor打开后可即可编辑
 
+<!--more-->
 ###2.生成与发布
 {%codeblock %}
 rake generate
