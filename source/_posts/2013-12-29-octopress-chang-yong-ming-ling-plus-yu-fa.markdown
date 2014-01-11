@@ -48,7 +48,7 @@ $ git push origin source
 	some code here.
 { %endcodeblock%}
 </pre>
-
+*[ ]不需要打上
 ###6.不带行号的代码高亮
 使用`<pre></pre>`可得到上面不带行号的高亮。
 
