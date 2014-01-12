@@ -11,7 +11,7 @@ module MarkdowndirFilter
                 content = post.content;
                 dir_str = "<div id='markdir'><p><strong>目录</strong></p>";
                 pcontent = ""
-                count = 0;      #count用作记着###的数目
+                @@ind = 0       #将@@ind归零
                 while md = /<h(\d)>(.*?)<\/h\d>/.match(content) do
                         # puts md[0];
                         content = md.post_match
@@ -22,13 +22,11 @@ module MarkdowndirFilter
                         dir_str += "&nbsp;&nbsp;&nbsp;&nbsp;" while (hx = hx - 1) > 0
                         dir_str += "<a href=\"#markdir#{@@ind}\">" + dir_name +"</a><br/>"
                         @@ind = @@ind + 1
-                        count = @@ind      #记录@@ind的值
                 end
                 pcontent += content
                 dir_str += "</div>"
-
-                if count<1              #判断count是否小于1
-                        dir_str = ""    #小于1的话，讲dir_str里面的内容清空
+                if @@ind<1              #判断@@ind是否小于1
+                        dir_str = ""    #小于1的话，将dir_str里面的内容清空
                 end
                 #puts dir_str
                 dir_str + pcontent

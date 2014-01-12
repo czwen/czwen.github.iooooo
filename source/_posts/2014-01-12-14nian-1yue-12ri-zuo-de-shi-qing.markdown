@@ -15,7 +15,7 @@ categories: Octopress duoshuo
 用着发现：当文章里面没有`##`的小标题时仍然会出现一个<pre>###目录</pre>
 这样一个有轻微强迫症的人很不爽。。。
 
-SO，diy一下。`14` `25` `30-32`行（PS:codeblock里面的mark好像用不了，可能是GreyShade这个theme问题吧 ?_? ）
+SO，diy一下。`14` `28-39`行（PS:codeblock里面的mark好像用不了，可能是GreyShade这个theme问题吧 ?_? ）
 {%codeblock MardowndirFilter.rb lang:ruby %}
 # MardowndirFilter.rb
 # Add content for each post 
@@ -30,7 +30,7 @@ module MarkdowndirFilter
                 content = post.content;
                 dir_str = "<div id='markdir'><p><strong>目录</strong></p>";
                 pcontent = ""
-                count = 0;      #count用作记着###的数目
+                @@ind = 0       #将@@ind归零
                 while md = /<h(\d)>(.*?)<\/h\d>/.match(content) do
                         # puts md[0];
                         content = md.post_match
@@ -41,13 +41,11 @@ module MarkdowndirFilter
                         dir_str += "&nbsp;&nbsp;&nbsp;&nbsp;" while (hx = hx - 1) > 0
                         dir_str += "<a href=\"#markdir#{@@ind}\">" + dir_name +"</a><br/>"
                         @@ind = @@ind + 1
-                        count = @@ind      #记录@@ind的值
                 end
                 pcontent += content
                 dir_str += "</div>"
-
-                if count<1              #判断count是否小于1
-                        dir_str = ""    #小于1的话，讲dir_str里面的内容清空
+                if @@ind<1              #判断@@ind是否小于1
+                        dir_str = ""    #小于1的话，将dir_str里面的内容清空
                 end
                 #puts dir_str
                 dir_str + pcontent
@@ -66,14 +64,7 @@ end
 Liquid::Template.register_filter MarkdowndirFilter
 {%endcodeblock%}
 
-😎在完全没有ruby的情况下做出来了，本来打算直接这样的：
-{%codeblock lang:ruby%}
-if @ind<1
-	dir_str = ""
-end
-{%endcodeblock%}
-但是出错，唯有加一个变量了。
-<br>
+😎
 感觉Ruby还是一门值得学习的语言，很简洁地说！
 ##3. 多说获取文章标题
 <pre>
