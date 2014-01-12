@@ -6,13 +6,13 @@ comments: true
 categories: Objc
 ---
 
-###前言
+##前言
 Objc各种小杂物，虽然微不足道，但是用起来可以在这里翻查一下。
 
 
 <!--more-->
 ---
-###1. NSMutableData
+##1. NSMutableData
 `NSMutableData`的各种操作，添加、清空数据
 {%codeblock lang:objc%}
 NSMutableData *mdata = [NSMutableData alloc]init];
