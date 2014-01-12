@@ -3,10 +3,11 @@ layout: post
 title: "Objc这件小事"
 date: 2014-01-11 15:03
 comments: true
-categories: 
+categories: Objc
 ---
-###目录
-1. NSMutableData
+
+###前言
+Objc各种小杂物，虽然微不足道，但是用起来可以在这里翻查一下。
 
 
 <!--more-->

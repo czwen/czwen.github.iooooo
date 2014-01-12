@@ -69,9 +69,15 @@ hello,`hi`,你好
 hello,`hi`,你好
 </pre>
 
+###9.在首页出现`继续阅读`
+
+{%codeblock%}
+<!--more-->
+{%endcodeblock%}
+*插入到你想的地方
+
 ###未完待续
 发现好的东西时我会继续添加的，希望帮到有需要的人！<br>
 下面推荐一个markdown语法的网站，个人感觉比较全面<br>
 [http://wowubuntu.com/markdown/](http://wowubuntu.com/markdown/)
 
-##2014降至，祝大家新年快乐！
