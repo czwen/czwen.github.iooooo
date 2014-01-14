@@ -75,7 +75,13 @@ categories:
 }
 
 {%endcodeblock%}
-##3. 下载
+##3. 第三方库
+本demo运用了[RegexKitLite](http://regexkit.sourceforge.net/),Thank you
+
+##4. 下载
 
 [go to github](https://github.com/czwen1993/3Links-In-Weibo-Text)<br>
+
+update：*现已支持表情的检测*
+
 这是我的第一个demo，也是第一次在github上发布，感谢支持！
