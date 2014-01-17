@@ -9,7 +9,7 @@ module MarkdowndirFilter
         @@ind = 0
         def generatedir(post)
                 content = post.content;
-                dir_str = "<div id='markdir'><p><strong>目录</strong></p>";
+                dir_str = "<div id='markdir'><p><strong>Content</strong></p>";
                 pcontent = ""
                 @@ind = 0       #将@@ind归零
                 while md = /<h(\d)>(.*?)<\/h\d>/.match(content) do
