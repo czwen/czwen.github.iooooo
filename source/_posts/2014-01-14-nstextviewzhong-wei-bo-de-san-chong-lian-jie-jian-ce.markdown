@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 前段时间一直在做一个Mac版的微博客户端，但是进度很慢，现在又有别的工作要做。估计要夭折了，并且前几天发现`Weibo For MAC`改名`Weebo`（现在好像是`WeiboX`），我的是`Weeboo`，感觉自己不争气啊，这么长时间都没做好，不能怨别人捷足先登。<br>
-现在，我要发布我的第一个demo：在NSTextView中检测微博中`@Ryan坏人`、`#话题#`、`http://czwen1993.github.com` 这三种特殊链接。现已发布在github，心情相当激动！！
+现在，我要发布我的第一个demo：在NSTextView中检测微博中`@Ryan坏人`、`#话题#`、`http://czwen1993.github.com` 这三种特殊链接。现已发布在github。
 ##1. 截图
 ![](../../../../../../postImage/2014-01-14-nstextviewzhong-wei-bo-de-san-chong-lian-jie-jian-ce-ScreenShot.png)
 <!--more-->
