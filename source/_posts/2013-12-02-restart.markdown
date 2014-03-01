@@ -1,8 +1,0 @@
----
-layout: post
-title: "restart"
-date: 2013-12-02 22:00
-comments: true
-categories: 
----
-重来吧，努力走下去！
