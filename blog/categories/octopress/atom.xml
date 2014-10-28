@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | Ryan de blog]]></title>
+  <link href="http://czwen1993.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://czwen1993.github.io/"/>
+  <updated>2014-08-12T23:16:28+08:00</updated>
+  <id>http://czwen1993.github.io/</id>
+  <author>
+    <name><![CDATA[Ryan]]></name>
+    <email><![CDATA[czwen1993@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[14年1月12日做的事情]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/01/12/14nian-1yue-12ri-zuo-de-shi-qing/"/>
+    <updated>2014-01-12T15:52:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/01/12/14nian-1yue-12ri-zuo-de-shi-qing</id>
+    <content type="html"><![CDATA[<p>两天的小假期，今天没有做ios开发，玩了一下Octopress，解决了困扰已久的bug，和加上了自动生成文章目录的功能和改进了一点小不足。</p>
+
+<!--more-->
+
+
+<h2>1. 解决页面CSS丢失</h2>
+
+<p>应该是多说某些代码与Octopress本身的代码有冲突，通过查看页面的源码发现<code>&lt;head&gt;&lt;/head&gt;</code>内的<code>description</code>部分出现了错乱。接着我把<code>/source/_includes/head.html</code>里面的<code>{ %capture description%}</code>部分注释掉，总算解决。</p>
+
+<h2>2. 为文章加上自动目录</h2>
+
+<p>作者是<a href="http://c4fun.cn/blog/2013/11/24/octopress-generate-post-content/">http://c4fun.cn/</a>做的一个小插件。<br>
+用着发现：当文章里面没有<code>##</code>的小标题时仍然会出现一个<pre>###目录</pre>
+这样一个有轻微强迫症的人很不爽。。。</p>
+
+<p>SO，diy一下。<code>14</code> <code>28-39</code>行（PS:codeblock里面的mark好像用不了，可能是GreyShade这个theme问题吧 ?_? ）
+<div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span>MardowndirFilter.rb </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;MardowndirFilter.rb&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="no">Add</span> <span class="n">content</span> <span class="k">for</span> <span class="n">each</span> <span class="n">post</span><span class="o">&lt;</span><span class="sr">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;h1&gt;swm8023 c4fun.cn&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="mi">11</span><span class="o">.</span><span class="mi">24</span><span class="o">.</span><span class="mi">2013</span><span class="o">&lt;</span><span class="sr">/h1&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;#</span>
+</span><span class='line'><span class="sr">require &amp;lsquo;./</span><span class="n">plugins</span><span class="o">/</span><span class="n">post_filters</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;module MarkdowndirFilter&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="vc">@@ind</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">generatedir</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">content</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">content</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">dir_str</span> <span class="o">=</span> <span class="s2">&quot;&amp;lt;div id=&#39;markdir&#39;&amp;gt;&amp;lt;p&amp;gt;&amp;lt;strong&amp;gt;目录&amp;lt;/strong&amp;gt;&amp;lt;/p&amp;gt;&quot;</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">pcontent</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>            <span class="vc">@@ind</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c1">#将@@ind归零</span>
+</span><span class='line'>            <span class="k">while</span> <span class="n">md</span> <span class="o">=</span> <span class="sr">/&amp;lt;h(\d)&amp;gt;(.*?)&amp;lt;\/h\d&amp;gt;/</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>                    <span class="c1"># puts md[0];</span>
+</span><span class='line'>                    <span class="n">content</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">post_match</span>
+</span><span class='line'>                    <span class="n">pcontent</span> <span class="o">+=</span> <span class="n">md</span><span class="o">.</span><span class="n">pre_match</span> <span class="o">+</span> <span class="s2">&quot;&amp;lt;span id =</span><span class="se">\&quot;</span><span class="s2">markdir</span><span class="si">#{</span><span class="vc">@@ind</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&amp;gt;&amp;lt;/span&amp;gt;&quot;</span><span class="o">+</span><span class="n">md</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+</span><span class='line'>                    <span class="n">hx</span> <span class="o">=</span> <span class="nb">Integer</span><span class="p">(</span><span class="n">md</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>                    <span class="n">dir_name</span> <span class="o">=</span> <span class="n">md</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span>
+</span><span class='line'>                    <span class="n">dir_name</span> <span class="o">=</span> <span class="n">md</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="k">if</span> <span class="n">md</span> <span class="o">=</span> <span class="sr">/&amp;lt;strong&amp;gt;(.*?)&amp;lt;\/strong&amp;gt;/</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+</span><span class='line'>                    <span class="n">dir_str</span> <span class="o">+=</span> <span class="s2">&quot;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&amp;amp;nbsp;&quot;</span> <span class="k">while</span> <span class="p">(</span><span class="n">hx</span> <span class="o">=</span> <span class="n">hx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span>
+</span><span class='line'>                    <span class="n">dir_str</span> <span class="o">+=</span> <span class="s2">&quot;&amp;lt;a href=</span><span class="se">\&quot;</span><span class="s2">#markdir</span><span class="si">#{</span><span class="vc">@@ind</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&amp;gt;&quot;</span> <span class="o">+</span> <span class="n">dir_name</span> <span class="o">+</span><span class="s2">&quot;&amp;lt;/a&amp;gt;&amp;lt;br/&amp;gt;&quot;</span>
+</span><span class='line'>                    <span class="vc">@@ind</span> <span class="o">=</span> <span class="vc">@@ind</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="k">end</span>
+</span><span class='line'>            <span class="n">pcontent</span> <span class="o">+=</span> <span class="n">content</span>
+</span><span class='line'>            <span class="n">dir_str</span> <span class="o">+=</span> <span class="s2">&quot;&amp;lt;/div&amp;gt;&quot;</span>
+</span><span class='line'>            <span class="k">if</span> <span class="vc">@@ind</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="mi">1</span>              <span class="c1">#判断@@ind是否小于1</span>
+</span><span class='line'>                    <span class="n">dir_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>    <span class="c1">#小于1的话，将dir_str里面的内容清空</span>
+</span><span class='line'>            <span class="k">end</span>
+</span><span class='line'>            <span class="c1">#puts dir_str</span>
+</span><span class='line'>            <span class="n">dir_str</span> <span class="o">+</span> <span class="n">pcontent</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="k">end</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;module Jekyll&lt;/</span><span class="nb">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>    <span class="k">class</span> <span class="nc">Markdowndir</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="no">PostFilter</span>
+</span><span class='line'>            <span class="kp">include</span> <span class="no">MarkdowndirFilter</span>
+</span><span class='line'>            <span class="k">def</span> <span class="nf">post_render</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+</span><span class='line'>                    <span class="n">post</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">generatedir</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="k">if</span> <span class="n">post</span><span class="o">.</span><span class="n">is_post?</span>
+</span><span class='line'>            <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/code&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="nb">p</span><span class="o">&gt;</span><span class="k">end</span><span class="o">&lt;</span><span class="sr">/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;p&gt;Liquid::Template.register_filter MarkdowndirFilter</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>😎
+感觉Ruby还是一门值得学习的语言，很简洁地说！</p>
+
+<h2>3. 多说获取文章标题</h2>
+
+<pre>
+data-title="{ {page.title}}"
+</pre>
+
+
+<p>*去掉空格，不加双引号的话，当标题有空格就会断掉。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 常用命令+语法]]></title>
+    <link href="http://czwen1993.github.io/blog/2013/12/29/octopress-chang-yong-ming-ling-plus-yu-fa/"/>
+    <updated>2013-12-29T13:43:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2013/12/29/octopress-chang-yong-ming-ling-plus-yu-fa</id>
+    <content type="html"><![CDATA[<p>初次使用Octopress，很多语法、命令都容易忘记，所以写下这篇文件给自己做备忘录，同时帮助有需要的人。</p>
+
+<hr />
+
+<h1>命令篇</h1>
+
+<h3>1.创建一篇新文章</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post[&ldquo;Octopress 常用命令+语法&rdquo;]</span></code></pre></td></tr></table></div></figure></notextile></div>
+创建后可在<code>source/_posts/</code>找到刚刚生成的markdown文件<br>
+文件名字为<code>2013-12-29-octopress-chang-yong-ming-ling-plus-yu-fa.markdown</code><br>
+用text editor打开后可即可编辑</p>
+
+<!--more-->
+
+
+<h3>2.生成与发布</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure></notextile></div>
+*执行以上的两条命令后就成功发布了，但是在github服务器上要一段时间才能显示出来。所以不要以为没成功发布。</p>
+
+<h3>3.本机预览</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake preview</span></code></pre></td></tr></table></div></figure></notextile></div>
+你可以通过<code>localhost:4040</code>或<code>127.0.0.1:4040</code>访问</p>
+
+<h3>4.push源码到github</h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m &lsquo;注释之类的..&rsquo;
+</span><span class='line'>$ git push origin source</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<hr />
+
+<h1>语法篇</h1>
+
+<p>其实说白了就是markdown语法，但是我不会。。。
+所以要多动手，尝试一下。</p>
+
+<h3>5.代码高亮</h3>
+
+<p>如果你想写出像上面一样的代码高亮的框框。</p>
+
+<pre>
+{ %codeblock [title] [lang:language] [url] [link text]%}
+    some code here.
+{ %endcodeblock%}
+</pre>
+
+
+<p>*[ ]不需要打上</p>
+
+<h3>6.不带行号的代码高亮</h3>
+
+<p>使用<code>&lt;pre&gt;&lt;/pre&gt;</code>可得到上面不带行号的高亮。</p>
+
+<h3>7.插入图片、链接</h3>
+
+<p>插入图片</p>
+
+<pre>
+![图片描述](图片地址) 
+</pre>
+
+
+<p>插入链接</p>
+
+<pre>
+[链接描述](链接地址) 
+</pre>
+
+
+<h3>8.令某文字高亮</h3>
+
+<p>hello,<code>hi</code>,你好</p>
+
+<pre>
+hello,`hi`,你好
+</pre>
+
+
+<h3>9.在首页出现<code>继续阅读</code></h3>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;/p>
+</span><span class='line'>
+</span><span class='line'>&lt;!--more-->
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;p></span></code></pre></td></tr></table></div></figure></notextile></div>
+*插入到你想的地方</p>
+
+<h3>未完待续</h3>
+
+<p>发现好的东西时我会继续添加的，希望帮到有需要的人！<br>
+下面推荐一个markdown语法的网站，个人感觉比较全面<br>
+<a href="http://wowubuntu.com/markdown/">http://wowubuntu.com/markdown/</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,267 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Octopress 常用命令+语法 - Ryan de blog</title>
+	<meta name="author" content="Ryan">
+
+<!-- 	
+	<meta name="description" content="Dec 29th, 2013 Octopress Octopress 常用命令+语法 目录命令篇&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.创建一篇新文章&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;& &hellip;">
+	 -->
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Ryan de blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://czwen1993.github.io/blog/2013/12/29/octopress-chang-yong-ming-ling-plus-yu-fa/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+ -->
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='/images/avatar.jpeg'  alt='Profile Picture' style='width: 95%' />");
+	</script>
+</div>
+<h1><a href="/">Ryan</a></h1>
+<p class="subtitle">i ❤ Cocoa</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">所以文章</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/itsryan" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		
+		<a class="github" href="https://github.com/czwen1993" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+<hgroup>
+  
+    <p class="subtitle"></p>
+  
+</hgroup>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-29T13:43:00+08:00" data-updated="true" itemprop="datePublished">Dec 29<span>th</span>, 2013</time></div>
+		<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>Octopress</a>
+
+
+</div>
+	</div>
+	
+	<h1 class="title" itemprop="name">Octopress 常用命令+语法</h1>
+	<div class="entry-content" itemprop="articleBody"><div id='markdir'><p><strong>目录</strong></p><a href="#markdir0">命令篇</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">1.创建一篇新文章</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">2.生成与发布</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir3">3.本机预览</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir4">4.push源码到github</a><br/><a href="#markdir5">语法篇</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir6">5.代码高亮</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir7">6.不带行号的代码高亮</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir8">7.插入图片、链接</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir9">8.令某文字高亮</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir10">9.在首页出现<code>继续阅读</code></a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir11">未完待续</a><br/></div><p>初次使用Octopress，很多语法、命令都容易忘记，所以写下这篇文件给自己做备忘录，同时帮助有需要的人。</p>
+
+<hr />
+
+<span id ="markdir0"></span><h1>命令篇</h1>
+
+<span id ="markdir1"></span><h3>1.创建一篇新文章</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["Octopress 常用命令+语法"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建后可在<code>source/_posts/</code>找到刚刚生成的markdown文件<br>
+文件名字为<code>2013-12-29-octopress-chang-yong-ming-ling-plus-yu-fa.markdown</code><br>
+用text editor打开后可即可编辑</p>
+
+<!--more-->
+
+
+<span id ="markdir2"></span><h3>2.生成与发布</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*执行以上的两条命令后就成功发布了，但是在github服务器上要一段时间才能显示出来。所以不要以为没成功发布。</p>
+
+<span id ="markdir3"></span><h3>3.本机预览</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake preview</span></code></pre></td></tr></table></div></figure>
+
+
+<p>你可以通过<code>localhost:4040</code>或<code>127.0.0.1:4040</code>访问</p>
+
+<span id ="markdir4"></span><h3>4.push源码到github</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m '注释之类的..'
+</span><span class='line'>$ git push origin source</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<span id ="markdir5"></span><h1>语法篇</h1>
+
+<p>其实说白了就是markdown语法，但是我不会。。。
+所以要多动手，尝试一下。</p>
+
+<span id ="markdir6"></span><h3>5.代码高亮</h3>
+
+<p>如果你想写出像上面一样的代码高亮的框框。</p>
+
+<pre>
+{ %codeblock [title] [lang:language] [url] [link text]%}
+    some code here.
+{ %endcodeblock%}
+</pre>
+
+
+<p>*[ ]不需要打上</p>
+
+<span id ="markdir7"></span><h3>6.不带行号的代码高亮</h3>
+
+<p>使用<code>&lt;pre&gt;&lt;/pre&gt;</code>可得到上面不带行号的高亮。</p>
+
+<span id ="markdir8"></span><h3>7.插入图片、链接</h3>
+
+<p>插入图片</p>
+
+<pre>
+![图片描述](图片地址) 
+</pre>
+
+
+<p>插入链接</p>
+
+<pre>
+[链接描述](链接地址) 
+</pre>
+
+
+<span id ="markdir9"></span><h3>8.令某文字高亮</h3>
+
+<p>hello,<code>hi</code>,你好</p>
+
+<pre>
+hello,`hi`,你好
+</pre>
+
+
+<span id ="markdir10"></span><h3>9.在首页出现<code>继续阅读</code></h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!--more--></span></code></pre></td></tr></table></div></figure>
+
+
+<p>*插入到你想的地方</p>
+
+<span id ="markdir11"></span><h3>未完待续</h3>
+
+<p>发现好的东西时我会继续添加的，希望帮到有需要的人！<br>
+下面推荐一个markdown语法的网站，个人感觉比较全面<br>
+<a href="http://wowubuntu.com/markdown/">http://wowubuntu.com/markdown/</a></p>
+</div>
+
+
+</article>
+
+
+  <section>
+    <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread" data-title="Octopress 常用命令+语法"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"czwen1993"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END --></div>
+  </section>
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Ryan -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

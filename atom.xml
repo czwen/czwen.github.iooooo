@@ -1,0 +1,778 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Ryan de blog]]></title>
+  <link href="http://czwen1993.github.io/atom.xml" rel="self"/>
+  <link href="http://czwen1993.github.io/"/>
+  <updated>2014-08-12T23:16:28+08:00</updated>
+  <id>http://czwen1993.github.io/</id>
+  <author>
+    <name><![CDATA[Ryan]]></name>
+    <email><![CDATA[czwen1993@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[在Cocoapods发布开源项目]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/08/12/zai-cocoapodsfa-bu-kai-yuan-xiang-mu/"/>
+    <updated>2014-08-12T22:42:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/08/12/zai-cocoapodsfa-bu-kai-yuan-xiang-mu</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">1.前言</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">2.步骤</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">2.1 准备工作</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir3">2.2发布到github上</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir4">2.3发布到cocoapods上</a><br/></div><span id ="markdir0"></span><h2>1.前言</h2>
+
+<p>最近在项目中需用到一个滚动的的图片浏览控件，由于一直都想尝试一下发布开源的库到cocoapods，所以自己就做了一个然后开始尝试发布到cocoapods。</p>
+
+<span id ="markdir1"></span><h2>2.步骤</h2>
+
+<span id ="markdir2"></span><h3>2.1 准备工作</h3>
+
+<p>首先，完成自己的项目的库的编写。
+然后在目录下运行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod spec create <span class="s1">&#39;YOUR_REPO_NAME&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后就会在目录下创建一个 <code>YOUR_REPO_NAME.podspec</code> 文件，接着在文本编辑器中打开如下（已简化，保留有用的，已我的为例）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Pod::Spec.new <span class="k">do</span> |s|
+</span><span class='line'>  s.name     <span class="o">=</span> <span class="s1">&#39;YYSlideGallery&#39;</span>                                    <span class="c">#我的开源名字</span>
+</span><span class='line'>  s.version  <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>                                         <span class="c">#版本号</span>
+</span><span class='line'>  s.author   <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;ryan&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;czwen1993@gmail.com&#39;</span> <span class="o">}</span>             <span class="c">#作者信息</span>
+</span><span class='line'>  s.homepage <span class="o">=</span> <span class="s1">&#39;https://github.com/czwen1993/YYSlideGallery&#39;</span>   <span class="c">#项目的主页</span>
+</span><span class='line'>  s.summary  <span class="o">=</span> <span class="s1">&#39;a gallery&#39;</span>                                     <span class="c">#项目描述</span>
+</span><span class='line'>  s.license  <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>                                           <span class="c">#开源项目遵守的协议</span>
+</span><span class='line'>  s.source   <span class="o">=</span> <span class="o">{</span> :git <span class="o">=</span>&gt; <span class="s1">&#39;https://github.com/czwen1993/YYSlideGallery.git&#39;</span>, :tag <span class="o">=</span>&gt; s.version.to_s <span class="o">}</span> <span class="c">#开源项目的资源，版本号一般以tag作为标识</span>
+</span><span class='line'>  s.source_files <span class="o">=</span> <span class="s1">&#39;YYSlideGallery/Classes/*.{h,m}&#39;</span>                <span class="c">#开源文件目录</span>
+</span><span class='line'>  s.platform <span class="o">=</span> :ios                                                <span class="c">#平台</span>
+</span><span class='line'>  s.ios.deployment_target <span class="o">=</span> <span class="s1">&#39;6.0&#39;</span>                              <span class="c">#面向的目标</span>
+</span><span class='line'>  s.requires_arc <span class="o">=</span> <span class="nb">true</span>                                            <span class="c">#是否需要ARC</span>
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>基本的信息就是这些。</p>
+
+<span id ="markdir3"></span><h3>2.2发布到github上</h3>
+
+<p>现在，你需要把你的代码发布到github上，同时需要添加<code>tag</code>并<code>push</code>。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git commit -a -m <span class="s1">&#39;commit&#39;</span>
+</span><span class='line'>git tag <span class="s1">&#39;0.0.1&#39;</span>
+</span><span class='line'>git push
+</span><span class='line'>git push --tags
+</span></code></pre></td></tr></table></div></figure>
+
+
+<span id ="markdir4"></span><h3>2.3发布到cocoapods上</h3>
+
+<p>要发布到cocoapods上，你需要一个帐号，可以送个<code>pod trunk register</code>命令注册。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod trunk register <span class="s1">&#39;E-mail&#39;</span> <span class="s1">&#39;YOUR_NAME&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>随后登录你的邮箱验证。</p>
+
+<p>验证后，你就可以发布你的第一个开源库了！</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod trunk push <span class="s1">&#39;.podspec 文件路径&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>发布前，你可以使用<code>lint</code>命令验证一下你的<code>.podspec</code>文件是否符合标准。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod spec lint
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大家晚安！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS本地化的小问题]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/08/04/iosben-di-hua-de-xiao-wen-ti/"/>
+    <updated>2014-08-04T23:15:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/08/04/iosben-di-hua-de-xiao-wen-ti</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">1. 应用名称本地化</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">2. 应用内容本地化</a><br/></div><p>好久无写过文章了，今天做iOS本地化遇到点小问题，在这里给大家分享一下和做个笔记。</p>
+
+<span id ="markdir0"></span><h2>1. 应用名称本地化</h2>
+
+<p>首先新建一个InfoPlist.strings，然后添加所需的语言</p>
+
+<p><img src="../../../../../../postImage/Screen-Shot%202014-08-04-at%2011.22.59-PM.png" alt="" /></p>
+
+<p>接着在每个语言的<code>InfoPlist.strings</code>中添加</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">CFBundleDisplayName</span><span class="o">=</span><span class="s">&quot;Your app name&quot;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最后，在Info.plist添加<code>Application has localized display name</code>字段，类型为<code>Boolean</code>，并设为<code>YES</code></p>
+
+<p><img src="../../../../../../postImage/Screen-Shot%202014-08-04-at%2011.22.26-PM.png" alt="" /></p>
+
+<span id ="markdir1"></span><h2>2. 应用内容本地化</h2>
+
+<p>如果遇到设置base语言之后不生效，可以尝试用en作为默认语言：</p>
+
+<figure class='code'><figcaption><span>main.m</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>    <span class="p">[[</span><span class="n">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span> <span class="nl">setObject:</span><span class="nb">nil</span> <span class="nl">forKey:</span><span class="s">@&quot;AppleLanguages&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span> <span class="n">synchronize</span><span class="p">];</span> <span class="c1">// 使设置生效</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 使en总是在第二位，第一位找不到就用第二位的</span>
+</span><span class='line'>    <span class="n">NSMutableArray</span> <span class="o">*</span><span class="n">mutableLanguages</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSLocale</span> <span class="n">preferredLanguages</span><span class="p">]</span> <span class="n">mutableCopy</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">NSInteger</span> <span class="n">enIndex</span> <span class="o">=</span> <span class="n">NSNotFound</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">lang</span> <span class="k">in</span> <span class="n">mutableLanguages</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">([</span><span class="n">lang</span> <span class="nl">isEqualToString:</span><span class="s">@&quot;en&quot;</span><span class="p">])</span>
+</span><span class='line'>        <span class="p">{</span>
+</span><span class='line'>            <span class="n">enIndex</span> <span class="o">=</span> <span class="p">[</span><span class="n">mutableLanguages</span> <span class="nl">indexOfObject:</span><span class="n">lang</span><span class="p">];</span> <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">@try</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">((</span><span class="n">enIndex</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">enIndex</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">mutableLanguages</span> <span class="nl">exchangeObjectAtIndex:</span><span class="mi">1</span> <span class="nl">withObjectAtIndex:</span><span class="n">enIndex</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">@catch</span> <span class="p">(</span><span class="n">NSException</span> <span class="o">*</span><span class="n">exception</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// 保存设置</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span> <span class="nl">setObject:</span><span class="n">mutableLanguages</span> <span class="nl">forKey:</span><span class="s">@&quot;AppleLanguages&quot;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">[[</span><span class="n">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span> <span class="n">synchronize</span><span class="p">];</span> <span class="c1">// 使设置生效</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上代码插在 main.m return前。</p>
+
+<p>NSLog(@&ldquo;good night world!&rdquo;)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iOS7下的斜体中文字]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/05/19/ios7xia-de-xie-ti-zhong-wen-zi/"/>
+    <updated>2014-05-19T10:46:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/05/19/ios7xia-de-xie-ti-zhong-wen-zi</id>
+    <content type="html"><![CDATA[<p>如题, 用遍所有字体都发现不能设置中文斜体, 终于再stackoverflow找到解决办法!</p>
+
+<p>原文连接:<a href="http://stackoverflow.com/questions/21009957/italic-font-not-work-for-chinese-japanese-korean-on-ios-7">http://stackoverflow.com/questions/21009957/italic-font-not-work-for-chinese-japanese-korean-on-ios-7</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">CGAffineTransform</span> <span class="n">matrix</span> <span class="o">=</span> <span class="n">CGAffineTransformMake</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">tanf</span><span class="p">(</span><span class="mi">15</span> <span class="o">*</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="n">M_PI</span> <span class="o">/</span> <span class="mi">180</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'><span class="n">UIFontDescriptor</span> <span class="o">*</span><span class="n">desc</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIFontDescriptor</span> <span class="nl">fontDescriptorWithName:</span><span class="s">@&quot;Helvetica-Light matrix:matrix];</span>
+</span><span class='line'><span class="n">textView</span><span class="p">.</span><span class="n">font</span> <span class="o">=</span> <span class="p">[</span><span class="n">UIFont</span> <span class="nl">fontWithDescriptor:</span><span class="n">desc</span> <span class="nl">size:</span><span class="mi">17</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CocoaPods安装与使用]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/02/28/cocoapodsan-zhuang-yu-shi-yong/"/>
+    <updated>2014-02-28T09:58:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/02/28/cocoapodsan-zhuang-yu-shi-yong</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">前言</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">安装</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">使用</a><br/></div><span id ="markdir0"></span><h2>前言</h2>
+
+<p>在开发App中难免遇到用第三方类库的情况，CocoaPods就是一款很好管理第三方类库的工具。在没有CocoaPods之前，使用第三方类库需要进行繁琐的操作，把库下载下来、解压、拉入project、配置参数……
+但是CocoaPods将简化以上操作并为更新类库带来便利。</p>
+
+<hr />
+
+<span id ="markdir1"></span><h2>安装</h2>
+
+<p>准备功夫：</p>
+
+<ol>
+<li>建议先把ruby更新至最新版本</li>
+<li>由于国情原因，rubygems.org放在AWS的资源会被墙，所以先把ruby的源换成国内的https://rubygems.org/</li>
+</ol>
+
+
+<p>↓</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/*更新ruby至最新*/
+</span><span class='line'>sudo gem update --system
+</span><span class='line'>
+</span><span class='line'>/*更新ruby源*/
+</span><span class='line'>gem sources --remove https://rubygems.org/
+</span><span class='line'>gem sources -a http://ruby.taobao.org/
+</span><span class='line'>gem sources -l
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>现在，应该不会处什么差错了。安装方式非常简单，使用ruby的gem命令即可下载安装：↓</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gem install cocoapods
+</span><span class='line'>pod setup
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意：执行至第二<code>pod setup</code>时，会输出Setting up CocoaPods master repo，这部时间较长，其实是Cocoapods下载其信息，大概120+MB，你可以查看文件大小来看是否在继续下载而不是卡死了。↓</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.cocoapods
+</span><span class='line'>du -sh *
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此，你的CocoaPods已经安装完成。</p>
+
+<hr />
+
+<span id ="markdir2"></span><h2>使用</h2>
+
+<p>首先，你需要新建一个名为Podfile的文件↓</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> <span class="s2">&quot;your project home&quot;</span>
+</span><span class='line'>touch Podfile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后，你可以用Sublime Text之类的editor编辑Podfile，格式如下↓</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>platform :ios, '7.0'
+</span><span class='line'>pod "AFNetworking", "~> 2.0"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>保存</p>
+
+<p>最后，执行以下命令</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大功告成！现在，你的第三方库已经准备好了。
+不过还需注意以下两点：</p>
+
+<ol>
+<li>使用CocoaPods生成的 .xcworkspace 文件来打开工程，而不是以前的 .xcodeproj 文件。</li>
+<li>每次更改了Podfile文件，你需要重新执行一次pod install命令。</li>
+</ol>
+
+
+<hr />
+
+<p>现在，你只需要安装CocoaPods（一次）、在project目录下建立Podfile文件、配置Podfile文件、然后进行<code>pod install</code>的操作，你所需要的第三方类库就会自动加入。</p>
+
+<p>参考博文：</p>
+
+<p><a href="http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/</a></p>
+
+<p>Have fun~</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[NSTextView中微博的三种链接检测]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/01/14/nstextviewzhong-wei-bo-de-san-chong-lian-jie-jian-ce/"/>
+    <updated>2014-01-14T12:13:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/01/14/nstextviewzhong-wei-bo-de-san-chong-lian-jie-jian-ce</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">1. 截图</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">2. 工作原理</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">3. 第三方库</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir3">4. 下载</a><br/></div><p>前段时间一直在做一个Mac版的微博客户端，但是进度很慢，现在又有别的工作要做。估计要夭折了，并且前几天发现<code>Weibo For MAC</code>改名<code>Weebo</code>（现在好像是<code>WeiboX</code>），我的是<code>Weeboo</code>，感觉自己不争气啊，这么长时间都没做好，不能怨别人捷足先登。<br>
+现在，我要发布我的第一个demo：在NSTextView中检测微博中<code>@Ryan坏人</code>、<code>#话题#</code>、<code>http://czwen1993.github.com</code> 这三种特殊链接。现已发布在github。</p>
+
+<span id ="markdir0"></span><h2>1. 截图</h2>
+
+<p><img src="../../../../../../postImage/2014-01-14-nstextviewzhong-wei-bo-de-san-chong-lian-jie-jian-ce-ScreenShot.png" alt="" /></p>
+
+<!--more-->
+
+
+<span id ="markdir1"></span><h2>2. 工作原理</h2>
+
+<p>利用正则表达式匹配<code>@Ryan坏人</code>、<code>#话题#</code>、<code>http://czwen1993.github.com</code>这三种特殊字符串，并返回一个匹配字符的数组。</p>
+
+<figure class='code'><figcaption><span>NSString+FindSomeLinkInText.m</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">//扫描链接，返回一个数组</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nf">scanStringForLinks</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">componentsMatchedByRegex:</span><span class="s">@&quot;(([http]+://?|www[.])[^</span><span class="se">\\</span><span class="s">s()&lt;&gt;]+(?:</span><span class="se">\\</span><span class="s">([</span><span class="se">\\</span><span class="s">w</span><span class="se">\\</span><span class="s">d]+</span><span class="se">\\</span><span class="s">)|([^[:punct:]</span><span class="se">\\</span><span class="s">s]|/)))[</span><span class="se">\\</span><span class="s">x00-</span><span class="se">\\</span><span class="s">xff]&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>遍历返回的数组，找出在文中所在的位置，并修改属性（颜色、字体之类的）</li>
+<li>新的字符串的替换原attributeString中的位置。</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>AppDelegate.m</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">findSomeLink</span>
+</span><span class='line'>    <span class="c1">//遍历text，利用正则表达式获取所需的字符串，并存在数组里</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">linkMatches</span> <span class="o">=</span> <span class="p">[</span><span class="n">text</span> <span class="n">scanStringForLinks</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//为链接添加属性（颜色、字体……）</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">linkMatchedString</span> <span class="k">in</span> <span class="n">linkMatches</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSRange</span> <span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="n">text</span> <span class="nl">rangeOfString:</span><span class="n">linkMatchedString</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// Add custom attribute of LinkMatch to indicate where our URLs are found. Could be blue</span>
+</span><span class='line'>            <span class="c1">// or any other color.</span>
+</span><span class='line'>            <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">LinkMatch</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSDictionary</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithObjectsAndKeys:</span>
+</span><span class='line'>                                      <span class="p">[</span><span class="n">NSCursor</span> <span class="n">pointingHandCursor</span><span class="p">],</span> <span class="n">NSCursorAttributeName</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="p">[</span><span class="n">NSColor</span> <span class="n">blueColor</span><span class="p">],</span> <span class="n">NSForegroundColorAttributeName</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="p">[</span><span class="n">NSFont</span> <span class="nl">fontWithName:</span><span class="s">@&quot;Helvetica&quot;</span> <span class="nl">size:</span><span class="mi">18</span><span class="p">],</span> <span class="n">NSFontAttributeName</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">linkMatchedString</span><span class="p">,</span> <span class="s">@&quot;LinkMatch&quot;</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">attributeString</span> <span class="nl">addAttributes:</span><span class="n">LinkMatch</span> <span class="nl">range:</span><span class="n">range</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后再在<code>-(void)mouseDown:(NSEvent*)event;</code>中处理点击后的操作</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">mouseDown:</span><span class="p">(</span><span class="n">NSEvent</span> <span class="o">*</span><span class="p">)</span><span class="nv">theEvent</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="c1">//获得鼠标位置</span>
+</span><span class='line'>    <span class="n">NSPoint</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">convertPoint:</span><span class="p">[</span><span class="n">theEvent</span> <span class="n">locationInWindow</span><span class="p">]</span> <span class="nl">fromView:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//获取点击的位置在text中的位置</span>
+</span><span class='line'>  <span class="n">NSInteger</span> <span class="n">charIndex</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">characterIndexForInsertionAtPoint:</span><span class="n">point</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//是否在text上点击</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">NSLocationInRange</span><span class="p">(</span><span class="n">charIndex</span><span class="p">,</span> <span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[[</span><span class="n">self</span> <span class="n">string</span><span class="p">]</span> <span class="n">length</span><span class="p">]))</span> <span class="o">==</span> <span class="n">YES</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      
+</span><span class='line'>        <span class="c1">//获取点击的字符属性</span>
+</span><span class='line'>      <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">[[</span><span class="n">self</span> <span class="n">attributedString</span><span class="p">]</span> <span class="nl">attributesAtIndex:</span><span class="n">charIndex</span> <span class="nl">effectiveRange:</span><span class="nb">NULL</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">//处理点击链接后的事件</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span> <span class="p">[</span><span class="n">attributes</span> <span class="nl">objectForKey:</span><span class="s">@&quot;LinkMatch&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span> <span class="s">@&quot;LinkMatch: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">attributes</span> <span class="nl">objectForKey:</span><span class="s">@&quot;LinkMatch&quot;</span><span class="p">]</span> <span class="p">);</span>
+</span><span class='line'>            <span class="p">[[</span><span class="n">NSWorkspace</span> <span class="n">sharedWorkspace</span><span class="p">]</span><span class="nl">openURL:</span><span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="p">[</span><span class="n">attributes</span> <span class="nl">objectForKey:</span><span class="s">@&quot;LinkMatch&quot;</span><span class="p">]]];</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="p">[</span><span class="n">super</span> <span class="nl">mouseDown:</span><span class="n">theEvent</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<span id ="markdir2"></span><h2>3. 第三方库</h2>
+
+<p>本demo运用了<a href="http://regexkit.sourceforge.net/">RegexKitLite</a>,Thank you</p>
+
+<span id ="markdir3"></span><h2>4. 下载</h2>
+
+<p><a href="https://github.com/czwen1993/3Links-In-Weibo-Text">go to github</a><br></p>
+
+<p>update：<em>现已支持表情的检测</em></p>
+
+<p>这是我的第一个demo，也是第一次在github上发布，感谢支持！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[14年1月12日做的事情]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/01/12/14nian-1yue-12ri-zuo-de-shi-qing/"/>
+    <updated>2014-01-12T15:52:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/01/12/14nian-1yue-12ri-zuo-de-shi-qing</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">1. 解决页面CSS丢失</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">2. 为文章加上自动目录</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">3. 多说获取文章标题</a><br/></div><p>两天的小假期，今天没有做ios开发，玩了一下Octopress，解决了困扰已久的bug，和加上了自动生成文章目录的功能和改进了一点小不足。</p>
+
+<!--more-->
+
+
+<span id ="markdir0"></span><h2>1. 解决页面CSS丢失</h2>
+
+<p>应该是多说某些代码与Octopress本身的代码有冲突，通过查看页面的源码发现<code>&lt;head&gt;&lt;/head&gt;</code>内的<code>description</code>部分出现了错乱。接着我把<code>/source/_includes/head.html</code>里面的<code>{ %capture description%}</code>部分注释掉，总算解决。</p>
+
+<span id ="markdir1"></span><h2>2. 为文章加上自动目录</h2>
+
+<p>作者是<a href="http://c4fun.cn/blog/2013/11/24/octopress-generate-post-content/">http://c4fun.cn/</a>做的一个小插件。<br>
+用着发现：当文章里面没有<code>##</code>的小标题时仍然会出现一个<pre>###目录</pre>
+这样一个有轻微强迫症的人很不爽。。。</p>
+
+<p>SO，diy一下。<code>14</code> <code>28-39</code>行（PS:codeblock里面的mark好像用不了，可能是GreyShade这个theme问题吧 ?_? ）</p>
+
+<figure class='code'><figcaption><span>MardowndirFilter.rb </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># MardowndirFilter.rb</span>
+</span><span class='line'><span class="c1"># Add content for each post </span>
+</span><span class='line'><span class="c1"># swm8023 c4fun.cn</span>
+</span><span class='line'><span class="c1"># 11.24.2013</span>
+</span><span class='line'><span class="c1">#</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;./plugins/post_filters&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">MarkdowndirFilter</span>
+</span><span class='line'>        <span class="vc">@@ind</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">def</span> <span class="nf">generatedir</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">content</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">content</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">dir_str</span> <span class="o">=</span> <span class="s2">&quot;&lt;div id=&#39;markdir&#39;&gt;&lt;p&gt;&lt;strong&gt;目录&lt;/strong&gt;&lt;/p&gt;&quot;</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">pcontent</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>                <span class="vc">@@ind</span> <span class="o">=</span> <span class="mi">0</span>       <span class="c1">#将@@ind归零</span>
+</span><span class='line'>                <span class="k">while</span> <span class="n">md</span> <span class="o">=</span> <span class="sr">/&lt;h(\d)&gt;(.*?)&lt;\/h\d&gt;/</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>                        <span class="c1"># puts md[0];</span>
+</span><span class='line'>                        <span class="n">content</span> <span class="o">=</span> <span class="n">md</span><span class="o">.</span><span class="n">post_match</span>
+</span><span class='line'>                        <span class="n">pcontent</span> <span class="o">+=</span> <span class="n">md</span><span class="o">.</span><span class="n">pre_match</span> <span class="o">+</span> <span class="s2">&quot;&lt;span id =</span><span class="se">\&quot;</span><span class="s2">markdir</span><span class="si">#{</span><span class="vc">@@ind</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&gt;&lt;/span&gt;&quot;</span><span class="o">+</span><span class="n">md</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+</span><span class='line'>                        <span class="n">hx</span> <span class="o">=</span> <span class="nb">Integer</span><span class="p">(</span><span class="n">md</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>                        <span class="n">dir_name</span> <span class="o">=</span> <span class="n">md</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span>
+</span><span class='line'>                        <span class="n">dir_name</span> <span class="o">=</span> <span class="n">md</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="k">if</span> <span class="n">md</span> <span class="o">=</span> <span class="sr">/&lt;strong&gt;(.*?)&lt;\/strong&gt;/</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">dir_name</span><span class="p">)</span>
+</span><span class='line'>                        <span class="n">dir_str</span> <span class="o">+=</span> <span class="s2">&quot;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&quot;</span> <span class="k">while</span> <span class="p">(</span><span class="n">hx</span> <span class="o">=</span> <span class="n">hx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>                        <span class="n">dir_str</span> <span class="o">+=</span> <span class="s2">&quot;&lt;a href=</span><span class="se">\&quot;</span><span class="s2">#markdir</span><span class="si">#{</span><span class="vc">@@ind</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&gt;&quot;</span> <span class="o">+</span> <span class="n">dir_name</span> <span class="o">+</span><span class="s2">&quot;&lt;/a&gt;&lt;br/&gt;&quot;</span>
+</span><span class='line'>                        <span class="vc">@@ind</span> <span class="o">=</span> <span class="vc">@@ind</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>                <span class="k">end</span>
+</span><span class='line'>                <span class="n">pcontent</span> <span class="o">+=</span> <span class="n">content</span>
+</span><span class='line'>                <span class="n">dir_str</span> <span class="o">+=</span> <span class="s2">&quot;&lt;/div&gt;&quot;</span>
+</span><span class='line'>                <span class="k">if</span> <span class="vc">@@ind</span><span class="o">&lt;</span><span class="mi">1</span>              <span class="c1">#判断@@ind是否小于1</span>
+</span><span class='line'>                        <span class="n">dir_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>    <span class="c1">#小于1的话，将dir_str里面的内容清空</span>
+</span><span class='line'>                <span class="k">end</span>
+</span><span class='line'>                <span class="c1">#puts dir_str</span>
+</span><span class='line'>                <span class="n">dir_str</span> <span class="o">+</span> <span class="n">pcontent</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">module</span> <span class="nn">Jekyll</span>
+</span><span class='line'>        <span class="k">class</span> <span class="nc">Markdowndir</span> <span class="o">&lt;</span> <span class="no">PostFilter</span>
+</span><span class='line'>                <span class="kp">include</span> <span class="no">MarkdowndirFilter</span>
+</span><span class='line'>                <span class="k">def</span> <span class="nf">post_render</span><span class="p">(</span><span class="n">post</span><span class="p">)</span>
+</span><span class='line'>                        <span class="n">post</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">generatedir</span><span class="p">(</span><span class="n">post</span><span class="p">)</span> <span class="k">if</span> <span class="n">post</span><span class="o">.</span><span class="n">is_post?</span>
+</span><span class='line'>                <span class="k">end</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="ss">Liquid</span><span class="p">:</span><span class="ss">:Template</span><span class="o">.</span><span class="n">register_filter</span> <span class="no">MarkdowndirFilter</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>😎
+感觉Ruby还是一门值得学习的语言，很简洁地说！</p>
+
+<span id ="markdir2"></span><h2>3. 多说获取文章标题</h2>
+
+<pre>
+data-title="{ {page.title}}"
+</pre>
+
+
+<p>*去掉空格，不加双引号的话，当标题有空格就会断掉。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Objc这件小事]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/01/11/objczhe-jian-xiao-shi/"/>
+    <updated>2014-01-11T15:03:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/01/11/objczhe-jian-xiao-shi</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">前言</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">1. NSMutableData</a><br/></div><span id ="markdir0"></span><h2>前言</h2>
+
+<p>Objc各种小杂物，虽然微不足道，但是用起来可以在这里翻查一下。</p>
+
+<!--more-->
+
+
+<hr />
+
+<span id ="markdir1"></span><h2>1. NSMutableData</h2>
+
+<p><code>NSMutableData</code>的各种操作，添加、清空数据</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSMutableData</span> <span class="o">*</span><span class="n">mdata</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableData</span> <span class="n">alloc</span><span class="p">]</span><span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//添加数据</span>
+</span><span class='line'><span class="p">[</span><span class="n">mdata</span> <span class="nl">appendData:</span><span class="n">data</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//清空数据</span>
+</span><span class='line'><span class="p">[</span><span class="n">mdata</span> <span class="nl">setLength:</span><span class="mi">0</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[写在2013结尾]]></title>
+    <link href="http://czwen1993.github.io/blog/2013/12/30/xie-zai-2013jie-wei/"/>
+    <updated>2013-12-30T23:34:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2013/12/30/xie-zai-2013jie-wei</id>
+    <content type="html"><![CDATA[<p>2013的post要在2014写，首先批评一下自己。<br></p>
+
+<p>在2013，正式进入Objc的学习和开发，个人开发一个微博客户端<code>Weeboo</code>，可惜迟迟未能完工，再一次批评一下自己！</p>
+
+<p>期望在2014年，能完成1-2个项目，6月前完成<code>Weeboo</code>，一年了，不想再拖。。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress 常用命令+语法]]></title>
+    <link href="http://czwen1993.github.io/blog/2013/12/29/octopress-chang-yong-ming-ling-plus-yu-fa/"/>
+    <updated>2013-12-29T13:43:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2013/12/29/octopress-chang-yong-ming-ling-plus-yu-fa</id>
+    <content type="html"><![CDATA[<div id='markdir'><p><strong>目录</strong></p><a href="#markdir0">命令篇</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">1.创建一篇新文章</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">2.生成与发布</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir3">3.本机预览</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir4">4.push源码到github</a><br/><a href="#markdir5">语法篇</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir6">5.代码高亮</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir7">6.不带行号的代码高亮</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir8">7.插入图片、链接</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir9">8.令某文字高亮</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir10">9.在首页出现<code>继续阅读</code></a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir11">未完待续</a><br/></div><p>初次使用Octopress，很多语法、命令都容易忘记，所以写下这篇文件给自己做备忘录，同时帮助有需要的人。</p>
+
+<hr />
+
+<span id ="markdir0"></span><h1>命令篇</h1>
+
+<span id ="markdir1"></span><h3>1.创建一篇新文章</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake new_post["Octopress 常用命令+语法"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>创建后可在<code>source/_posts/</code>找到刚刚生成的markdown文件<br>
+文件名字为<code>2013-12-29-octopress-chang-yong-ming-ling-plus-yu-fa.markdown</code><br>
+用text editor打开后可即可编辑</p>
+
+<!--more-->
+
+
+<span id ="markdir2"></span><h3>2.生成与发布</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*执行以上的两条命令后就成功发布了，但是在github服务器上要一段时间才能显示出来。所以不要以为没成功发布。</p>
+
+<span id ="markdir3"></span><h3>3.本机预览</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake preview</span></code></pre></td></tr></table></div></figure>
+
+
+<p>你可以通过<code>localhost:4040</code>或<code>127.0.0.1:4040</code>访问</p>
+
+<span id ="markdir4"></span><h3>4.push源码到github</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m '注释之类的..'
+</span><span class='line'>$ git push origin source</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<span id ="markdir5"></span><h1>语法篇</h1>
+
+<p>其实说白了就是markdown语法，但是我不会。。。
+所以要多动手，尝试一下。</p>
+
+<span id ="markdir6"></span><h3>5.代码高亮</h3>
+
+<p>如果你想写出像上面一样的代码高亮的框框。</p>
+
+<pre>
+{ %codeblock [title] [lang:language] [url] [link text]%}
+    some code here.
+{ %endcodeblock%}
+</pre>
+
+
+<p>*[ ]不需要打上</p>
+
+<span id ="markdir7"></span><h3>6.不带行号的代码高亮</h3>
+
+<p>使用<code>&lt;pre&gt;&lt;/pre&gt;</code>可得到上面不带行号的高亮。</p>
+
+<span id ="markdir8"></span><h3>7.插入图片、链接</h3>
+
+<p>插入图片</p>
+
+<pre>
+![图片描述](图片地址) 
+</pre>
+
+
+<p>插入链接</p>
+
+<pre>
+[链接描述](链接地址) 
+</pre>
+
+
+<span id ="markdir9"></span><h3>8.令某文字高亮</h3>
+
+<p>hello,<code>hi</code>,你好</p>
+
+<pre>
+hello,`hi`,你好
+</pre>
+
+
+<span id ="markdir10"></span><h3>9.在首页出现<code>继续阅读</code></h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!--more--></span></code></pre></td></tr></table></div></figure>
+
+
+<p>*插入到你想的地方</p>
+
+<span id ="markdir11"></span><h3>未完待续</h3>
+
+<p>发现好的东西时我会继续添加的，希望帮到有需要的人！<br>
+下面推荐一个markdown语法的网站，个人感觉比较全面<br>
+<a href="http://wowubuntu.com/markdown/">http://wowubuntu.com/markdown/</a></p>
+]]></content>
+  </entry>
+  
+</feed>
