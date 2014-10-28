@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Objc | Ryan de blog]]></title>
+  <link href="http://czwen1993.github.io/blog/categories/objc/atom.xml" rel="self"/>
+  <link href="http://czwen1993.github.io/"/>
+  <updated>2014-10-28T23:44:04+08:00</updated>
+  <id>http://czwen1993.github.io/</id>
+  <author>
+    <name><![CDATA[Ryan]]></name>
+    <email><![CDATA[czwen1993@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Objc这件小事]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/01/11/objczhe-jian-xiao-shi/"/>
+    <updated>2014-01-11T15:03:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/01/11/objczhe-jian-xiao-shi</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>Objc各种小杂物，虽然微不足道，但是用起来可以在这里翻查一下。</p>
+
+<!--more-->
+
+
+<hr />
+
+<h2>1. NSMutableData</h2>
+
+<p><code>NSMutableData</code>的各种操作，添加、清空数据
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSMutableData</span> <span class="o">*</span><span class="n">mdata</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSMutableData</span> <span class="n">alloc</span><span class="p">]</span><span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//添加数据</span>
+</span><span class='line'><span class="p">[</span><span class="n">mdata</span> <span class="nl">appendData:</span><span class="n">data</span><span class="p">];</span>
+</span><span class='line'><span class="c1">//清空数据</span>
+</span><span class='line'><span class="p">[</span><span class="n">mdata</span> <span class="nl">setLength:</span><span class="mi">0</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>

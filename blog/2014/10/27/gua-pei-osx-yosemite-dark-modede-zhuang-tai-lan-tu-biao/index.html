@@ -1,0 +1,223 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>适配OSX Yosemite Dark Mode的状态栏图标 - Ryan de blog</title>
+	<meta name="author" content="Ryan">
+
+<!-- 	
+	<meta name="description" content="Oct 27th, 2014 适配OSX Yosemite Dark Mode的状态栏图标 目录&nbsp;&nbsp;&nbsp;&nbsp;前言&nbsp;&nbsp;&nbsp;&nbsp;截图&nbsp;&nbsp;&nbsp;&nbsp;代码前言 OSX 10.10 Yosemite &hellip;">
+	 -->
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Ryan de blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://czwen1993.github.io/blog/2014/10/27/gua-pei-osx-yosemite-dark-modede-zhuang-tai-lan-tu-biao/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+ -->
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='/images/avatar.jpeg'  alt='Profile Picture' style='width: 95%' />");
+	</script>
+</div>
+<h1><a href="/">Ryan</a></h1>
+<p class="subtitle">i ❤ Cocoa</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">所以文章</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/itsryan" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		
+		<a class="github" href="https://github.com/czwen1993" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+<hgroup>
+  
+    <p class="subtitle"></p>
+  
+</hgroup>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-27T11:30:00+08:00" data-updated="true" itemprop="datePublished">Oct 27<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+</div>
+	</div>
+	
+	<h1 class="title" itemprop="name">适配OSX Yosemite Dark Mode的状态栏图标</h1>
+	<div class="entry-content" itemprop="articleBody"><div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">前言</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">截图</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">代码</a><br/></div><span id ="markdir0"></span><h2>前言</h2>
+
+<p>OSX 10.10 Yosemite 增加了一个Dark Mode，使状态了个Dock呈现黑色的风格，打开方法：<code>设置-&gt;通用-&gt;勾选“使用暗色菜单栏和Dock”</code>，这使在菜单栏有应用图标的App增加适应Dark Mode</p>
+
+<span id ="markdir1"></span><h2>截图</h2>
+
+<p><img src="../../../../../../postImage/Screen%20Shot%202014-10-27%20at%202.52.52%20PM.png" alt="" />
+<img src="../../../../../../postImage/Screen%20Shot%202014-10-27%20at%202.53.05%20PM.png" alt="" /></p>
+
+<!--more-->
+
+
+<span id ="markdir2"></span><h2>代码</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSDictionary</span> <span class="o">*</span><span class="n">dict</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSUserDefaults</span> <span class="n">standardUserDefaults</span><span class="p">]</span> <span class="nl">persistentDomainForName:</span><span class="n">NSGlobalDomain</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">id</span> <span class="n">style</span> <span class="o">=</span> <span class="p">[</span><span class="n">dict</span> <span class="nl">objectForKey:</span><span class="s">@&quot;AppleInterfaceStyle&quot;</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">BOOL</span> <span class="n">darkModeOn</span> <span class="o">=</span> <span class="p">(</span> <span class="n">style</span> <span class="o">&amp;&amp;</span> <span class="p">[</span><span class="n">style</span> <span class="nl">isKindOfClass:</span><span class="p">[</span><span class="n">NSString</span> <span class="n">class</span><span class="p">]]</span> <span class="o">&amp;&amp;</span> <span class="n">NSOrderedSame</span> <span class="o">==</span> <span class="p">[</span><span class="n">style</span> <span class="nl">caseInsensitiveCompare:</span><span class="s">@&quot;dark&quot;</span><span class="p">]</span> <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="n">darkModeOn</span><span class="p">){</span>
+</span><span class='line'>  <span class="c1">// do something in darkModeOn</span>
+</span><span class='line'><span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// do something in lightModeOn</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>最好还需要增加一个通知，来获取用户切换dark mode，</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[[</span><span class="n">NSDistributedNotificationCenter</span> <span class="n">defaultCenter</span><span class="p">]</span> <span class="nl">addObserver:</span><span class="n">self</span> <span class="nl">selector:</span><span class="k">@selector</span><span class="p">(</span><span class="nl">darkModeChanged:</span><span class="p">)</span> <span class="nl">name:</span><span class="s">@&quot;AppleInterfaceThemeChangedNotification&quot;</span> <span class="nl">object:</span><span class="nb">nil</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是，今天又找到一个更好的办法，Apple官方推荐的办法。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="n">NSImage</span> <span class="o">*</span><span class="n">image</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSImage</span> <span class="nl">imageNamed:</span><span class="s">@&quot;track_light&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">image</span> <span class="nl">setTemplate:</span><span class="n">YES</span><span class="p">];</span>  
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">statusBarButton</span> <span class="nl">setImage:</span><span class="n">image</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">statusBarButton</span> <span class="nl">setAlternateImage:</span><span class="n">image</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样就不用再设置通知，也不用判断是什么模式。这个办法更为简洁，赞！</p>
+
+<p>如果是要支持旧版本，应该再判断一下再<code>setTemplate</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="kt">BOOL</span> <span class="n">isOldSystem</span> <span class="o">=</span> <span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">NSAppKitVersionNumber</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">NSAppKitVersionNumber10_9</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+</article>
+
+
+  <section>
+    <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread" data-title="适配OSX Yosemite Dark Mode的状态栏图标"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"czwen1993"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END --></div>
+  </section>
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Ryan -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

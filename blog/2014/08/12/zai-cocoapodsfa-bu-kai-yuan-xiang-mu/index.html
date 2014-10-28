@@ -1,0 +1,247 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>在Cocoapods发布开源项目 - Ryan de blog</title>
+	<meta name="author" content="Ryan">
+
+<!-- 	
+	<meta name="description" content="Aug 12th, 2014 在Cocoapods发布开源项目 目录&nbsp;&nbsp;&nbsp;&nbsp;1.前言&nbsp;&nbsp;&nbsp;&nbsp;2.步骤&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2.1 准备工作& &hellip;">
+	 -->
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Ryan de blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://czwen1993.github.io/blog/2014/08/12/zai-cocoapodsfa-bu-kai-yuan-xiang-mu/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+ -->
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='/images/avatar.jpeg'  alt='Profile Picture' style='width: 95%' />");
+	</script>
+</div>
+<h1><a href="/">Ryan</a></h1>
+<p class="subtitle">i ❤ Cocoa</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">所以文章</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/itsryan" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		
+		<a class="github" href="https://github.com/czwen1993" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+<hgroup>
+  
+    <p class="subtitle"></p>
+  
+</hgroup>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T22:42:00+08:00" data-updated="true" itemprop="datePublished">Aug 12<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+</div>
+	</div>
+	
+	<h1 class="title" itemprop="name">在Cocoapods发布开源项目</h1>
+	<div class="entry-content" itemprop="articleBody"><div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">1.前言</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">2.步骤</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">2.1 准备工作</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir3">2.2发布到github上</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir4">2.3发布到cocoapods上</a><br/></div><span id ="markdir0"></span><h2>1.前言</h2>
+
+<p>最近在项目中需用到一个滚动的的图片浏览控件，由于一直都想尝试一下发布开源的库到cocoapods，所以自己就做了一个然后开始尝试发布到cocoapods。</p>
+
+<span id ="markdir1"></span><h2>2.步骤</h2>
+
+<span id ="markdir2"></span><h3>2.1 准备工作</h3>
+
+<p>首先，完成自己的项目的库的编写。
+然后在目录下运行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod spec create <span class="s1">&#39;YOUR_REPO_NAME&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后就会在目录下创建一个 <code>YOUR_REPO_NAME.podspec</code> 文件，接着在文本编辑器中打开如下（已简化，保留有用的，已我的为例）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Pod::Spec.new <span class="k">do</span> |s|
+</span><span class='line'>  s.name     <span class="o">=</span> <span class="s1">&#39;YYSlideGallery&#39;</span>                                    <span class="c">#我的开源名字</span>
+</span><span class='line'>  s.version  <span class="o">=</span> <span class="s1">&#39;0.0.1&#39;</span>                                         <span class="c">#版本号</span>
+</span><span class='line'>  s.author   <span class="o">=</span> <span class="o">{</span> <span class="s1">&#39;ryan&#39;</span> <span class="o">=</span>&gt; <span class="s1">&#39;czwen1993@gmail.com&#39;</span> <span class="o">}</span>             <span class="c">#作者信息</span>
+</span><span class='line'>  s.homepage <span class="o">=</span> <span class="s1">&#39;https://github.com/czwen1993/YYSlideGallery&#39;</span>   <span class="c">#项目的主页</span>
+</span><span class='line'>  s.summary  <span class="o">=</span> <span class="s1">&#39;a gallery&#39;</span>                                     <span class="c">#项目描述</span>
+</span><span class='line'>  s.license  <span class="o">=</span> <span class="s1">&#39;MIT&#39;</span>                                           <span class="c">#开源项目遵守的协议</span>
+</span><span class='line'>  s.source   <span class="o">=</span> <span class="o">{</span> :git <span class="o">=</span>&gt; <span class="s1">&#39;https://github.com/czwen1993/YYSlideGallery.git&#39;</span>, :tag <span class="o">=</span>&gt; s.version.to_s <span class="o">}</span> <span class="c">#开源项目的资源，版本号一般以tag作为标识</span>
+</span><span class='line'>  s.source_files <span class="o">=</span> <span class="s1">&#39;YYSlideGallery/Classes/*.{h,m}&#39;</span>                <span class="c">#开源文件目录</span>
+</span><span class='line'>  s.platform <span class="o">=</span> :ios                                                <span class="c">#平台</span>
+</span><span class='line'>  s.ios.deployment_target <span class="o">=</span> <span class="s1">&#39;6.0&#39;</span>                              <span class="c">#面向的目标</span>
+</span><span class='line'>  s.requires_arc <span class="o">=</span> <span class="nb">true</span>                                            <span class="c">#是否需要ARC</span>
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>基本的信息就是这些。</p>
+
+<span id ="markdir3"></span><h3>2.2发布到github上</h3>
+
+<p>现在，你需要把你的代码发布到github上，同时需要添加<code>tag</code>并<code>push</code>。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>git commit -a -m <span class="s1">&#39;commit&#39;</span>
+</span><span class='line'>git tag <span class="s1">&#39;0.0.1&#39;</span>
+</span><span class='line'>git push
+</span><span class='line'>git push --tags
+</span></code></pre></td></tr></table></div></figure>
+
+
+<span id ="markdir4"></span><h3>2.3发布到cocoapods上</h3>
+
+<p>要发布到cocoapods上，你需要一个帐号，可以送个<code>pod trunk register</code>命令注册。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod trunk register <span class="s1">&#39;E-mail&#39;</span> <span class="s1">&#39;YOUR_NAME&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>随后登录你的邮箱验证。</p>
+
+<p>验证后，你就可以发布你的第一个开源库了！</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod trunk push <span class="s1">&#39;.podspec 文件路径&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>发布前，你可以使用<code>lint</code>命令验证一下你的<code>.podspec</code>文件是否符合标准。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod spec lint
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大家晚安！</p>
+</div>
+
+
+</article>
+
+
+  <section>
+    <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread" data-title="在Cocoapods发布开源项目"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"czwen1993"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END --></div>
+  </section>
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Ryan -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

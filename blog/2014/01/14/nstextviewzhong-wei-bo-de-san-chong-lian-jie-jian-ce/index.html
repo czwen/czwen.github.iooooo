@@ -1,0 +1,296 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>NSTextView中微博的三种链接检测 - Ryan de blog</title>
+	<meta name="author" content="Ryan">
+
+<!-- 	
+	<meta name="description" content="Jan 14th, 2014 NSTextView中微博的三种链接检测 目录&nbsp;&nbsp;&nbsp;&nbsp;1. 截图&nbsp;&nbsp;&nbsp;&nbsp;2. 工作原理&nbsp;&nbsp;&nbsp;&nbsp;3. 第三方库&nbsp;&nbsp;&nbsp;& &hellip;">
+	 -->
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Ryan de blog" type="application/atom+xml">
+	
+	<link rel="canonical" href="http://czwen1993.github.io/blog/2014/01/14/nstextviewzhong-wei-bo-de-san-chong-lian-jie-jian-ce/">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	
+<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<!-- <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+ -->
+</head>
+
+
+<body>
+	<div class="container">
+		<div class="left-col">
+			<div class="intrude-less">
+			<header id="header" class="inner"><div class="profilepic">	
+	<script src="/javascripts/md5.js"></script>
+	<script type="text/javascript">
+		document.write("<img src='/images/avatar.jpeg'  alt='Profile Picture' style='width: 95%' />");
+	</script>
+</div>
+<h1><a href="/">Ryan</a></h1>
+<p class="subtitle">i ❤ Cocoa</p>
+<nav id="main-nav"><ul class="main-navigation">
+  <li><a href="/">主页</a></li>
+  <li><a href="/blog/archives">所以文章</a></li>
+</ul>
+</nav>
+<nav id="sub-nav">
+	<div class="social">
+		
+		<a class="weibo" href="http://www.weibo.com/itsryan" title="Weibo">Weibo</a>
+		
+		
+		
+		
+		
+		<a class="github" href="https://github.com/czwen1993" title="GitHub">GitHub</a>
+		
+		
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+	</div>
+</nav>
+<hgroup>
+  
+    <p class="subtitle"></p>
+  
+</hgroup>
+
+</header>				
+			</div>
+		</div>	
+		<div class="mid-col">
+			
+				
+			
+			<div class="mid-col-container">
+				<div id="content" class="inner"><article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+	<div class="meta">
+		<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-14T12:13:00+08:00" data-updated="true" itemprop="datePublished">Jan 14<span>th</span>, 2014</time></div>
+		<div class="tags">
+
+</div>
+	</div>
+	
+	<h1 class="title" itemprop="name">NSTextView中微博的三种链接检测</h1>
+	<div class="entry-content" itemprop="articleBody"><div id='markdir'><p><strong>目录</strong></p>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir0">1. 截图</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir1">2. 工作原理</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir2">3. 第三方库</a><br/>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#markdir3">4. 下载</a><br/></div><p>前段时间一直在做一个Mac版的微博客户端，但是进度很慢，现在又有别的工作要做。估计要夭折了，并且前几天发现<code>Weibo For MAC</code>改名<code>Weebo</code>（现在好像是<code>WeiboX</code>），我的是<code>Weeboo</code>，感觉自己不争气啊，这么长时间都没做好，不能怨别人捷足先登。<br>
+现在，我要发布我的第一个demo：在NSTextView中检测微博中<code>@Ryan坏人</code>、<code>#话题#</code>、<code>http://czwen1993.github.com</code> 这三种特殊链接。现已发布在github。</p>
+
+<span id ="markdir0"></span><h2>1. 截图</h2>
+
+<p><img src="../../../../../../postImage/2014-01-14-nstextviewzhong-wei-bo-de-san-chong-lian-jie-jian-ce-ScreenShot.png" alt="" /></p>
+
+<!--more-->
+
+
+<span id ="markdir1"></span><h2>2. 工作原理</h2>
+
+<p>利用正则表达式匹配<code>@Ryan坏人</code>、<code>#话题#</code>、<code>http://czwen1993.github.com</code>这三种特殊字符串，并返回一个匹配字符的数组。</p>
+
+<figure class='code'><figcaption><span>NSString+FindSomeLinkInText.m</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">//扫描链接，返回一个数组</span>
+</span><span class='line'><span class="k">-</span> <span class="p">(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="nf">scanStringForLinks</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">[</span><span class="n">self</span> <span class="nl">componentsMatchedByRegex:</span><span class="s">@&quot;(([http]+://?|www[.])[^</span><span class="se">\\</span><span class="s">s()&lt;&gt;]+(?:</span><span class="se">\\</span><span class="s">([</span><span class="se">\\</span><span class="s">w</span><span class="se">\\</span><span class="s">d]+</span><span class="se">\\</span><span class="s">)|([^[:punct:]</span><span class="se">\\</span><span class="s">s]|/)))[</span><span class="se">\\</span><span class="s">x00-</span><span class="se">\\</span><span class="s">xff]&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>遍历返回的数组，找出在文中所在的位置，并修改属性（颜色、字体之类的）</li>
+<li>新的字符串的替换原attributeString中的位置。</li>
+</ol>
+
+
+<figure class='code'><figcaption><span>AppDelegate.m</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">findSomeLink</span>
+</span><span class='line'>    <span class="c1">//遍历text，利用正则表达式获取所需的字符串，并存在数组里</span>
+</span><span class='line'>    <span class="n">NSArray</span> <span class="o">*</span><span class="n">linkMatches</span> <span class="o">=</span> <span class="p">[</span><span class="n">text</span> <span class="n">scanStringForLinks</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//为链接添加属性（颜色、字体……）</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">NSString</span> <span class="o">*</span><span class="n">linkMatchedString</span> <span class="k">in</span> <span class="n">linkMatches</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">NSRange</span> <span class="n">range</span> <span class="o">=</span> <span class="p">[</span><span class="n">text</span> <span class="nl">rangeOfString:</span><span class="n">linkMatchedString</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">range</span><span class="p">.</span><span class="n">location</span> <span class="o">!=</span> <span class="n">NSNotFound</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// Add custom attribute of LinkMatch to indicate where our URLs are found. Could be blue</span>
+</span><span class='line'>            <span class="c1">// or any other color.</span>
+</span><span class='line'>            <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">LinkMatch</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSDictionary</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithObjectsAndKeys:</span>
+</span><span class='line'>                                      <span class="p">[</span><span class="n">NSCursor</span> <span class="n">pointingHandCursor</span><span class="p">],</span> <span class="n">NSCursorAttributeName</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="p">[</span><span class="n">NSColor</span> <span class="n">blueColor</span><span class="p">],</span> <span class="n">NSForegroundColorAttributeName</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="p">[</span><span class="n">NSFont</span> <span class="nl">fontWithName:</span><span class="s">@&quot;Helvetica&quot;</span> <span class="nl">size:</span><span class="mi">18</span><span class="p">],</span> <span class="n">NSFontAttributeName</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="n">linkMatchedString</span><span class="p">,</span> <span class="s">@&quot;LinkMatch&quot;</span><span class="p">,</span>
+</span><span class='line'>                                      <span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>            <span class="p">[</span><span class="n">attributeString</span> <span class="nl">addAttributes:</span><span class="n">LinkMatch</span> <span class="nl">range:</span><span class="n">range</span><span class="p">];</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后再在<code>-(void)mouseDown:(NSEvent*)event;</code>中处理点击后的操作</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">-</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">mouseDown:</span><span class="p">(</span><span class="n">NSEvent</span> <span class="o">*</span><span class="p">)</span><span class="nv">theEvent</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="c1">//获得鼠标位置</span>
+</span><span class='line'>    <span class="n">NSPoint</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">convertPoint:</span><span class="p">[</span><span class="n">theEvent</span> <span class="n">locationInWindow</span><span class="p">]</span> <span class="nl">fromView:</span><span class="nb">nil</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">//获取点击的位置在text中的位置</span>
+</span><span class='line'>  <span class="n">NSInteger</span> <span class="n">charIndex</span> <span class="o">=</span> <span class="p">[</span><span class="n">self</span> <span class="nl">characterIndexForInsertionAtPoint:</span><span class="n">point</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">//是否在text上点击</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">NSLocationInRange</span><span class="p">(</span><span class="n">charIndex</span><span class="p">,</span> <span class="n">NSMakeRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[[</span><span class="n">self</span> <span class="n">string</span><span class="p">]</span> <span class="n">length</span><span class="p">]))</span> <span class="o">==</span> <span class="n">YES</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      
+</span><span class='line'>        <span class="c1">//获取点击的字符属性</span>
+</span><span class='line'>      <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">[[</span><span class="n">self</span> <span class="n">attributedString</span><span class="p">]</span> <span class="nl">attributesAtIndex:</span><span class="n">charIndex</span> <span class="nl">effectiveRange:</span><span class="nb">NULL</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">//处理点击链接后的事件</span>
+</span><span class='line'>      <span class="k">if</span><span class="p">(</span> <span class="p">[</span><span class="n">attributes</span> <span class="nl">objectForKey:</span><span class="s">@&quot;LinkMatch&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">NSLog</span><span class="p">(</span> <span class="s">@&quot;LinkMatch: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">attributes</span> <span class="nl">objectForKey:</span><span class="s">@&quot;LinkMatch&quot;</span><span class="p">]</span> <span class="p">);</span>
+</span><span class='line'>            <span class="p">[[</span><span class="n">NSWorkspace</span> <span class="n">sharedWorkspace</span><span class="p">]</span><span class="nl">openURL:</span><span class="p">[</span><span class="n">NSURL</span> <span class="nl">URLWithString:</span><span class="p">[</span><span class="n">attributes</span> <span class="nl">objectForKey:</span><span class="s">@&quot;LinkMatch&quot;</span><span class="p">]]];</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="p">[</span><span class="n">super</span> <span class="nl">mouseDown:</span><span class="n">theEvent</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<span id ="markdir2"></span><h2>3. 第三方库</h2>
+
+<p>本demo运用了<a href="http://regexkit.sourceforge.net/">RegexKitLite</a>,Thank you</p>
+
+<span id ="markdir3"></span><h2>4. 下载</h2>
+
+<p><a href="https://github.com/czwen1993/3Links-In-Weibo-Text">go to github</a><br></p>
+
+<p>update：<em>现已支持表情的检测</em></p>
+
+<p>这是我的第一个demo，也是第一次在github上发布，感谢支持！</p>
+</div>
+
+
+</article>
+
+
+  <section>
+    <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
+	<div class="ds-thread" data-title="NSTextView中微博的三种链接检测"></div>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"czwen1993"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = 'http://static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		|| document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- Duoshuo Comment END --></div>
+  </section>
+
+</div>
+			</div>
+			<footer id="footer" class="inner"><p>
+  Copyright &copy; 2014 - Ryan -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+Design credit: <a href="http://shashankmehta.in/archive/2012/greyshade.html">Shashank Mehta</a></footer>
+			<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+
+
+
+
+
+		</div>
+	</div>
+</body>
+</html>

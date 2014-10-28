@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Summary | Ryan de blog]]></title>
+  <link href="http://czwen1993.github.io/blog/categories/summary/atom.xml" rel="self"/>
+  <link href="http://czwen1993.github.io/"/>
+  <updated>2014-10-28T23:44:04+08:00</updated>
+  <id>http://czwen1993.github.io/</id>
+  <author>
+    <name><![CDATA[Ryan]]></name>
+    <email><![CDATA[czwen1993@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[写在2013结尾]]></title>
+    <link href="http://czwen1993.github.io/blog/2013/12/30/xie-zai-2013jie-wei/"/>
+    <updated>2013-12-30T23:34:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2013/12/30/xie-zai-2013jie-wei</id>
+    <content type="html"><![CDATA[<p>2013的post要在2014写，首先批评一下自己。<br></p>
+
+<p>在2013，正式进入Objc的学习和开发，个人开发一个微博客户端<code>Weeboo</code>，可惜迟迟未能完工，再一次批评一下自己！</p>
+
+<p>期望在2014年，能完成1-2个项目，6月前完成<code>Weeboo</code>，一年了，不想再拖。。</p>
+]]></content>
+  </entry>
+  
+</feed>

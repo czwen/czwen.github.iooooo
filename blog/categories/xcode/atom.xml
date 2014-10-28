@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: XCode | Ryan de blog]]></title>
+  <link href="http://czwen1993.github.io/blog/categories/xcode/atom.xml" rel="self"/>
+  <link href="http://czwen1993.github.io/"/>
+  <updated>2014-10-28T23:44:04+08:00</updated>
+  <id>http://czwen1993.github.io/</id>
+  <author>
+    <name><![CDATA[Ryan]]></name>
+    <email><![CDATA[czwen1993@gmail.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[CocoaPods安装与使用]]></title>
+    <link href="http://czwen1993.github.io/blog/2014/02/28/cocoapodsan-zhuang-yu-shi-yong/"/>
+    <updated>2014-02-28T09:58:00+08:00</updated>
+    <id>http://czwen1993.github.io/blog/2014/02/28/cocoapodsan-zhuang-yu-shi-yong</id>
+    <content type="html"><![CDATA[<h2>前言</h2>
+
+<p>在开发App中难免遇到用第三方类库的情况，CocoaPods就是一款很好管理第三方类库的工具。在没有CocoaPods之前，使用第三方类库需要进行繁琐的操作，把库下载下来、解压、拉入project、配置参数……
+但是CocoaPods将简化以上操作并为更新类库带来便利。</p>
+
+<hr />
+
+<h2>安装</h2>
+
+<p>准备功夫：</p>
+
+<ol>
+<li>建议先把ruby更新至最新版本</li>
+<li>由于国情原因，rubygems.org放在AWS的资源会被墙，所以先把ruby的源换成国内的https://rubygems.org/</li>
+</ol>
+
+
+<p>↓
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/&lt;em&gt;更新ruby至最新&lt;/em&gt;/
+</span><span class='line'>sudo gem update &amp;mdash;system&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;/&lt;em&gt;更新ruby源&lt;/em&gt;/
+</span><span class='line'>gem sources &amp;mdash;remove &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;https://rubygems.org/&quot;</span>&gt;https://rubygems.org/&lt;/a&gt;
+</span><span class='line'>gem sources -a &lt;a <span class="nv">href</span><span class="o">=</span><span class="s2">&quot;http://ruby.taobao.org/&quot;</span>&gt;http://ruby.taobao.org/&lt;/a&gt;
+</span><span class='line'>gem sources -l
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>现在，应该不会处什么差错了。安装方式非常简单，使用ruby的gem命令即可下载安装：↓
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo gem install cocoapods
+</span><span class='line'>pod setup
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+注意：执行至第二<code>pod setup</code>时，会输出Setting up CocoaPods master repo，这部时间较长，其实是Cocoapods下载其信息，大概120+MB，你可以查看文件大小来看是否在继续下载而不是卡死了。↓
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> ~/.cocoapods
+</span><span class='line'>du -sh *
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>至此，你的CocoaPods已经安装完成。</p>
+
+<hr />
+
+<h2>使用</h2>
+
+<p>首先，你需要新建一个名为Podfile的文件↓
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">cd</span> &amp;ldquo;your project home&amp;rdquo;
+</span><span class='line'>touch Podfile
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>然后，你可以用Sublime Text之类的editor编辑Podfile，格式如下↓
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>platform :ios, &lsquo;7.0&rsquo;
+</span><span class='line'>pod &ldquo;AFNetworking&rdquo;, &ldquo;~> 2.0&rdquo;</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>保存</p>
+
+<p>最后，执行以下命令
+<div class='bogus-wrapper'><notextile><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>pod install
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p>大功告成！现在，你的第三方库已经准备好了。
+不过还需注意以下两点：</p>
+
+<ol>
+<li>使用CocoaPods生成的 .xcworkspace 文件来打开工程，而不是以前的 .xcodeproj 文件。</li>
+<li>每次更改了Podfile文件，你需要重新执行一次pod install命令。</li>
+</ol>
+
+
+<hr />
+
+<p>现在，你只需要安装CocoaPods（一次）、在project目录下建立Podfile文件、配置Podfile文件、然后进行<code>pod install</code>的操作，你所需要的第三方类库就会自动加入。</p>
+
+<p>参考博文：</p>
+
+<p><a href="http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/">http://blog.devtang.com/blog/2012/12/02/use-cocoapod-to-manage-ios-lib-dependency/</a></p>
+
+<p>Have fun~</p>
+]]></content>
+  </entry>
+  
+</feed>
