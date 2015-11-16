@@ -2,13 +2,13 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://czwen1993.github.io
+url: http://czwen.github.io
 title: Ryan de blog
 subtitle: i ❤ Cocoa
 author: Ryan
 simple_search: http://google.com/search
 description: i ❤ Cocoa
-motto: 
+motto:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
 # You can customize the format as defined in
@@ -64,7 +64,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user: czwen1993
+github_user: czwen
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
@@ -91,7 +91,7 @@ delicious_user:
 delicious_count: 3
 
 # Disqus Comments
-disqus_short_name: 
+disqus_short_name:
 disqus_show_comment_count: false
 
 # duoshuo comments
